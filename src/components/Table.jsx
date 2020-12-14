@@ -18,18 +18,8 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(id,title,state,url,createdAt,updatedAt) {
-  return { id,title,state,url,createdAt,updatedAt};
-}
 
-const rows = [
-  createData(121,'Test','Active','https://material-ui-pickers.dev/','2020-12-11','2020-12-11'),
-  createData(121,'Test','Active','https://material-ui-pickers.dev/','2020-12-11','2020-12-11'),
-  createData(121,'Test','Active','https://material-ui-pickers.dev/','2020-12-11','2020-12-11'),
-  createData(121,'Test','Active','https://material-ui-pickers.dev/','2020-12-11','2020-12-11')
-];
-
-export default function BasicTable({handleClickOpen}) {
+export default function BasicTable({handleClickOpen, rows}) {
   const classes = useStyles();
 
   return (
