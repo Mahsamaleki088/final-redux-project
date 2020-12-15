@@ -1,56 +1,58 @@
 import React from 'react';
 import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  addItem,
+  removeItem,
+  selectTodos,
+} from './features/todo/todoSlice';
+import AppBar from './components/AppBar'
+import Table from './components/Table'
+import { TextField, Container } from '@material-ui/core';
+import Dialog from './components/Dialog'
 
+function createData(id,title,state,url,createdAt,updatedAt) {
+  return { id,title,state,url,createdAt,updatedAt};
+}
+const rows = [
+  createData(121,'Test','Active','https://material-ui-pickers.dev/','2020-12-11','2020-12-11'),
+  createData(121,'Test','Active','https://material-ui-pickers.dev/','2020-12-11','2020-12-11'),
+  createData(121,'Test','Active','https://material-ui-pickers.dev/','2020-12-11','2020-12-11'),
+  createData(121,'Test','Active','https://material-ui-pickers.dev/','2020-12-11','2020-12-11')
+];
 function App() {
+  const todos = useSelector(selectTodos);
+  
+  const dispatch = useDispatch();
+  const [open, setOpen] = React.useState(false);
+  console.log(open)
+
+  const handleClickOpen =()=> {
+
+    setOpen(true);
+  };
+  const handleCreate = (todo)=>() => {
+    dispatch(addItem(todo))
+    console.log(todo)
+    setOpen(false);
+  };
+  const handleUpdate = () => {
+    setOpen(false);
+  };
+  const handleDelete = () => {
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+    <Dialog open={open} handleClose={handleClose} handleAdd={handleCreate} />  
+    <AppBar/>
+    <Container maxWidth="lg">
+      <TextField id="standard-basic" fullWidth label="Standard" />      
+    <Table handleClickOpen={handleClickOpen} rows={todos} />
+    </Container>
+    
     </div>
   );
 }
