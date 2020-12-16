@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -19,21 +19,21 @@ export default function FormDialog({open,handleClose,handleAdd,handleUpdate,upda
     createdAt: "", 
     updatedAt: ""
   })
-  const onClose = ()=>{
-    console.log('this is onClose:',onClose)
-    setTodo({
-    id: "", 
-    title: "",
-    state: "",
-    url: "", 
-    createdAt: "", 
-    updatedAt: ""}
-    )
-    handleClose();
-  }
+
+  useEffect(() => {
+    setTodo(updatedItem?updatedItem: {
+      id: "", 
+      title: "",
+      state: "",
+      url: "", 
+      createdAt: "", 
+      updatedAt: ""
+    }
+      )
+  }, [open])
   
   return (
-        <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
+        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -95,7 +95,7 @@ export default function FormDialog({open,handleClose,handleAdd,handleUpdate,upda
         <Button onClick={updatedItem?handleUpdate(todo): handleAdd(todo)} color="primary">
             Save
           </Button>
-          <Button onClick={onClose} color="primary">
+          <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
         </DialogActions>
