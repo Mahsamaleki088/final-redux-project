@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,8 +9,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DatePicker from '../components/DatePicker'
 import moment from 'moment';
 
-export default function FormDialog({open,handleClose,handleAdd}) {  
-  const [todo, setTodo]=useState({
+export default function FormDialog({open,handleClose,handleAdd,handleUpdate,updatedItem}) {  
+  
+  const [todo, setTodo]=useState(updatedItem?updatedItem: {
     id: "", 
     title: "",
     state: "",
@@ -18,6 +19,19 @@ export default function FormDialog({open,handleClose,handleAdd}) {
     createdAt: "", 
     updatedAt: ""
   })
+
+  useEffect(() => {
+    setTodo(updatedItem?updatedItem: {
+      id: "", 
+      title: "",
+      state: "",
+      url: "", 
+      createdAt: "", 
+      updatedAt: ""
+    }
+      )
+  }, [open])
+  
   return (
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
@@ -78,8 +92,8 @@ export default function FormDialog({open,handleClose,handleAdd}) {
           name="updatedAt"   />        
         </DialogContent>
         <DialogActions>
-        <Button onClick={handleAdd(todo)} color="primary">
-            Add
+        <Button onClick={updatedItem?handleUpdate(todo): handleAdd(todo)} color="primary">
+            Save
           </Button>
           <Button onClick={handleClose} color="primary">
             Cancel

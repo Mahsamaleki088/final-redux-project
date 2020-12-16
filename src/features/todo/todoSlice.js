@@ -11,11 +11,16 @@ export const todoSlice = createSlice({
     },
     removeItem: (state, action) => {
       state.todos = state.todos.filter(todo => todo.id !== action.payload);
-    }
+    },
+    updateItem: (state, action) => {
+      const filteredTodos= state.todos.filter(todo=>todo.id !== action.payload.id);
+      state.todos = [...filteredTodos,action.payload];
+    },
+    
   },
 });
 
-export const { addItem, removeItem } = todoSlice.actions;
+export const { addItem, removeItem,updateItem } = todoSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
