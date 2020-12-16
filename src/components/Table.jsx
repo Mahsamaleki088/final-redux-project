@@ -11,6 +11,8 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CreateIcon from '@material-ui/icons/Create';
 import AddIcon from '@material-ui/icons/Add';
+import {useSelector, useDispatch } from 'react-redux';
+import {selectTodos, removeItem} from '../features/todo/todoSlice';
 
 const useStyles = makeStyles({
   table: {
@@ -19,8 +21,15 @@ const useStyles = makeStyles({
 });
 
 
-export default function BasicTable({handleClickOpen, rows}) {
+export default function BasicTable({handleClickOpen}) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const todos = useSelector(selectTodos);
+  const handleDelete = (id) => ()=> {
+    
+    dispatch(removeItem(id))
+  };
+ 
 
   return (
     <TableContainer component={Paper}>
@@ -34,13 +43,13 @@ export default function BasicTable({handleClickOpen, rows}) {
             <TableCell width="15%" align="left">Created at</TableCell>
             <TableCell width="15%" align="left">Updated at</TableCell>
             <TableCell width='5%' align="left"></TableCell>
-            <TableCell width="5%" align="left" ><IconButton  onClick={handleClickOpen} aria-label="delete">
+            <TableCell width="5%" align="left" ><IconButton  onClick={handleClickOpen(null)} aria-label="delete">
                 <AddIcon  />
             </IconButton></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {todos.map((row) => (
             <TableRow key={row.id}>
               <TableCell >
                 {row.id}
@@ -50,10 +59,10 @@ export default function BasicTable({handleClickOpen, rows}) {
               <TableCell align="left">{row.url}</TableCell>
               <TableCell align="left">{row.createdAt}</TableCell>
               <TableCell align="left">{row.updatedAt}</TableCell>
-              <TableCell align="left"><IconButton aria-label="delete">
+              <TableCell align="left"><IconButton aria-label="edit" onClick={handleClickOpen(row)}>
                 <CreateIcon color='error'/>
                 </IconButton></TableCell>
-              <TableCell align="left"><IconButton aria-label="delete">
+              <TableCell align="left"><IconButton aria-label="delete" onClick={handleDelete(row.id)}>
                 <DeleteIcon color='error' />
                 </IconButton>
                 </TableCell>

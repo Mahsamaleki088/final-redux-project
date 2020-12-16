@@ -9,8 +9,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DatePicker from '../components/DatePicker'
 import moment from 'moment';
 
-export default function FormDialog({open,handleClose,handleAdd}) {  
-  const [todo, setTodo]=useState({
+export default function FormDialog({open,handleClose,handleAdd,handleUpdate,updatedItem}) {  
+  
+  const [todo, setTodo]=useState(updatedItem?updatedItem: {
     id: "", 
     title: "",
     state: "",
@@ -18,8 +19,21 @@ export default function FormDialog({open,handleClose,handleAdd}) {
     createdAt: "", 
     updatedAt: ""
   })
+  const onClose = ()=>{
+    console.log('this is onClose:',onClose)
+    setTodo({
+    id: "", 
+    title: "",
+    state: "",
+    url: "", 
+    createdAt: "", 
+    updatedAt: ""}
+    )
+    handleClose();
+  }
+  
   return (
-        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -78,10 +92,10 @@ export default function FormDialog({open,handleClose,handleAdd}) {
           name="updatedAt"   />        
         </DialogContent>
         <DialogActions>
-        <Button onClick={handleAdd(todo)} color="primary">
-            Add
+        <Button onClick={updatedItem?handleUpdate(todo): handleAdd(todo)} color="primary">
+            Save
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={onClose} color="primary">
             Cancel
           </Button>
         </DialogActions>
