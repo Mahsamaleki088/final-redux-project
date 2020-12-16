@@ -16,8 +16,8 @@ export default function FormDialog({open,handleClose,handleAdd,handleUpdate,upda
     title: "",
     state: "",
     url: "", 
-    createdAt: "", 
-    updatedAt: ""
+    createdAt: new Date(), 
+    updatedAt: new Date()
   })
 
   useEffect(() => {
@@ -26,8 +26,8 @@ export default function FormDialog({open,handleClose,handleAdd,handleUpdate,upda
       title: "",
       state: "",
       url: "", 
-      createdAt: "", 
-      updatedAt: ""
+      createdAt: new Date(), 
+      updatedAt: new Date()
     }
       )
   }, [open])
