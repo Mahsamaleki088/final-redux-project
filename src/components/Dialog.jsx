@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,useMemo} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -11,21 +11,22 @@ import moment from 'moment';
 import {v4 as uuid4} from 'uuid';
 
 export default function FormDialog({open,handleClose,handleAdd,handleUpdate,updatedItem}) {  
-  
-  const formValue = updatedItem?updatedItem: {
+ 
+  const formValue = useMemo(() => {return updatedItem?updatedItem : {
     id: uuid4() , 
     title: "",
     state: "",
     url: "", 
     createdAt: null, 
     updatedAt: null
-  }
+   }}, [updatedItem])
+
   const [todo, setTodo]=useState(formValue)
 
   useEffect(() => {
     setTodo(formValue)
-  }, [open])
-  
+  }, [open,formValue] )
+
   return (
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>

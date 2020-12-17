@@ -14,7 +14,7 @@ import AddIcon from '@material-ui/icons/Add';
 import {useSelector, useDispatch } from 'react-redux';
 import {selectTodos, removeItem} from '../features/todo/todoSlice';
 import { TextField } from '@material-ui/core';
-import { blue,grey } from '@material-ui/core/colors';
+import { grey } from '@material-ui/core/colors';
 
 const useStyles = makeStyles({
   table: {
@@ -41,7 +41,6 @@ export default function BasicTable({handleClickOpen}) {
     setUserInput(e.target.value)
   }
   const filterRow = todos.filter(todo=> {
-    console.log(todo)
     return todo.title.toLowerCase().includes(userInput.toLowerCase())||
     todo.id.toLowerCase().includes(userInput.toLowerCase())||
     todo.state.toLowerCase().includes(userInput.toLowerCase())||
@@ -63,8 +62,8 @@ export default function BasicTable({handleClickOpen}) {
             <TableCell width="20%" align="left">Url</TableCell>
             <TableCell width="10%" align="left">Created at</TableCell>
             <TableCell width="10%" align="left">Updated at</TableCell>
-            <TableCell width='5%' align="left"></TableCell>
-            <TableCell width="5%" align="left" ><IconButton  onClick={handleClickOpen(null)} aria-label="delete">
+            <TableCell width='7%' align="left"></TableCell>
+            <TableCell width="3%" align="left" ><IconButton  onClick={handleClickOpen(null)} aria-label="delete">
                 <AddIcon  />
             </IconButton></TableCell>
           </TableRow>
