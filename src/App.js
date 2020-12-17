@@ -40,8 +40,7 @@ function App() {
     <div className="App">
     <Dialog open={open} handleClose={handleClose} handleAdd={handleCreate} handleUpdate={handleUpdate} updatedItem={updatedItem}/>  
     <AppBar/>
-    <Container maxWidth="lg">
-      <TextField id="standard-basic" fullWidth label="Standard" />      
+    <Container maxWidth="lg">   
     <Table handleClickOpen={handleClickOpen} />
     </Container>
     
