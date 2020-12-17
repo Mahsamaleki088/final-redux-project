@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,useMemo} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,30 +8,25 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DatePicker from '../components/DatePicker'
 import moment from 'moment';
+import {v4 as uuid4} from 'uuid';
 
 export default function FormDialog({open,handleClose,handleAdd,handleUpdate,updatedItem}) {  
-  
-  const [todo, setTodo]=useState(updatedItem?updatedItem: {
-    id: "", 
+ 
+  const formValue = useMemo(() => {return updatedItem?updatedItem : {
+    id: uuid4() , 
     title: "",
     state: "",
     url: "", 
-    createdAt: "", 
-    updatedAt: ""
-  })
+    createdAt: null, 
+    updatedAt: null
+   }}, [updatedItem])
+
+  const [todo, setTodo]=useState(formValue)
 
   useEffect(() => {
-    setTodo(updatedItem?updatedItem: {
-      id: "", 
-      title: "",
-      state: "",
-      url: "", 
-      createdAt: "", 
-      updatedAt: ""
-    }
-      )
-  }, [open])
-  
+    setTodo(formValue)
+  }, [open,formValue] )
+
   return (
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
@@ -39,7 +34,7 @@ export default function FormDialog({open,handleClose,handleAdd,handleUpdate,upda
           <DialogContentText>
             Add your new item
           </DialogContentText>
-          <TextField
+          <TextField inputProps={{ readOnly: true, }}
             onChange={(event)=>setTodo({...todo, [event.target.name]:event.target.value})}
             value={todo.id}
             name="id"

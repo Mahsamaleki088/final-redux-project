@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import { useDispatch } from 'react-redux';
 import {
   addItem,
@@ -7,7 +6,7 @@ import {
 } from './features/todo/todoSlice';
 import AppBar from './components/AppBar'
 import Table from './components/Table'
-import { TextField, Container } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import Dialog from './components/Dialog'
 
 
@@ -17,7 +16,6 @@ function App() {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const [updatedItem, setUpdatedItem]=React.useState(null);
-  console.log(open)
 
   const handleClickOpen =(todo)=>()=> {    
     setUpdatedItem(todo);
