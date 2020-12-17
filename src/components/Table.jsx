@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -13,6 +13,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import AddIcon from '@material-ui/icons/Add';
 import {useSelector, useDispatch } from 'react-redux';
 import {selectTodos, removeItem} from '../features/todo/todoSlice';
+import { TextField } from '@material-ui/core';
 
 const useStyles = makeStyles({
   table: {
@@ -25,18 +26,29 @@ export default function BasicTable({handleClickOpen}) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const todos = useSelector(selectTodos);
+  const [userInput, setUserInput] = useState("")
   const handleDelete = (id) => ()=> {
-    
     dispatch(removeItem(id))
   };
- 
+  const handleSearch = (e) => {
+    setUserInput(e.target.value)
+  }
+  const filterRow = todos.filter(todo=> {
+    console.log(todo)
+    return todo.title.toLowerCase().includes(userInput.toLowerCase())||
+    todo.id.toLowerCase().includes(userInput.toLowerCase())||
+    todo.state.toLowerCase().includes(userInput.toLowerCase())||
+    todo.url.toLowerCase().includes(userInput.toLowerCase())
+  })
 
   return (
+    <>
+    <TextField onChange={handleSearch} value={userInput} id="standard-basic" fullWidth label="Standard" /> 
     <TableContainer component={Paper}>
       <Table  className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell width="10%">id</TableCell>
+            <TableCell width="10%">Id</TableCell>
             <TableCell width="20%" align="left">Title</TableCell>
             <TableCell width="10%" align="left">State</TableCell>
             <TableCell width="20%" align="left">Url</TableCell>
@@ -49,7 +61,7 @@ export default function BasicTable({handleClickOpen}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {todos.map((row) => (
+          {filterRow.map((row) => (
             <TableRow key={row.id}>
               <TableCell >
                 {row.id}
@@ -72,5 +84,6 @@ export default function BasicTable({handleClickOpen}) {
         </TableBody>
       </Table>
     </TableContainer>
+    </>
   );
 }
