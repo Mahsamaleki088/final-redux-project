@@ -8,11 +8,12 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DatePicker from '../components/DatePicker'
 import moment from 'moment';
+import {v4 as uuid4} from 'uuid';
 
 export default function FormDialog({open,handleClose,handleAdd,handleUpdate,updatedItem}) {  
   
   const formValue = updatedItem?updatedItem: {
-    id: "", 
+    id: uuid4() , 
     title: "",
     state: "",
     url: "", 
@@ -32,7 +33,7 @@ export default function FormDialog({open,handleClose,handleAdd,handleUpdate,upda
           <DialogContentText>
             Add your new item
           </DialogContentText>
-          <TextField
+          <TextField inputProps={{ readOnly: true, }}
             onChange={(event)=>setTodo({...todo, [event.target.name]:event.target.value})}
             value={todo.id}
             name="id"

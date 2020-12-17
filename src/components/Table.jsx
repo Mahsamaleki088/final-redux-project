@@ -14,11 +14,18 @@ import AddIcon from '@material-ui/icons/Add';
 import {useSelector, useDispatch } from 'react-redux';
 import {selectTodos, removeItem} from '../features/todo/todoSlice';
 import { TextField } from '@material-ui/core';
+import { blue,grey } from '@material-ui/core/colors';
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  tableHead:{
+    backgroundColor: grey[100] ,
+  },
+  searchField:{
+    margin :'15px 0',
+  }
 });
 
 
@@ -43,17 +50,19 @@ export default function BasicTable({handleClickOpen}) {
 
   return (
     <>
-    <TextField onChange={handleSearch} value={userInput} id="standard-basic" fullWidth label="Standard" /> 
-    <TableContainer component={Paper}>
+    <TextField onChange={handleSearch} value={userInput} id="standard-basic" className={classes.searchField} fullWidth label="Search" /> 
+    <TableContainer component={Paper} >
       <Table  className={classes.table} aria-label="simple table">
-        <TableHead>
+        <TableHead  classes={{
+          root:classes.tableHead 
+        }}>
           <TableRow>
-            <TableCell width="10%">Id</TableCell>
+            <TableCell width="20%">Id</TableCell>
             <TableCell width="20%" align="left">Title</TableCell>
             <TableCell width="10%" align="left">State</TableCell>
             <TableCell width="20%" align="left">Url</TableCell>
-            <TableCell width="15%" align="left">Created at</TableCell>
-            <TableCell width="15%" align="left">Updated at</TableCell>
+            <TableCell width="10%" align="left">Created at</TableCell>
+            <TableCell width="10%" align="left">Updated at</TableCell>
             <TableCell width='5%' align="left"></TableCell>
             <TableCell width="5%" align="left" ><IconButton  onClick={handleClickOpen(null)} aria-label="delete">
                 <AddIcon  />
