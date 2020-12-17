@@ -11,25 +11,18 @@ import moment from 'moment';
 
 export default function FormDialog({open,handleClose,handleAdd,handleUpdate,updatedItem}) {  
   
-  const [todo, setTodo]=useState(updatedItem?updatedItem: {
+  const formValue = updatedItem?updatedItem: {
     id: "", 
     title: "",
     state: "",
     url: "", 
-    createdAt: "", 
-    updatedAt: ""
-  })
+    createdAt: null, 
+    updatedAt: null
+  }
+  const [todo, setTodo]=useState(formValue)
 
   useEffect(() => {
-    setTodo(updatedItem?updatedItem: {
-      id: "", 
-      title: "",
-      state: "",
-      url: "", 
-      createdAt: "", 
-      updatedAt: ""
-    }
-      )
+    setTodo(formValue)
   }, [open])
   
   return (
