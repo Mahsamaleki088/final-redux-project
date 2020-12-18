@@ -7,11 +7,9 @@ import {
 import AppBar from './components/AppBar'
 import Table from './components/Table'
 import { Container } from '@material-ui/core';
-import Dialog from './components/Dialog'
+import Dialog from './components/Dialog';
 
-
-function App() {
-  
+function App() { 
   
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
